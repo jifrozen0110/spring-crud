@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns xmlns:th="http://www.w3.org/1999/xhtml" : th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<script type="text/JavaScript" src="http://code.jquery.com/jquery-1.7.min.js"></script>
+<div class="container">
+        <p>글번호 : [[${view.boardId}]]</p>
+        <p id="title">제목 : [[${view.title}]]</p>
+        <p>작성자 : [[${view.name}]]</p>
+    <div id="content">
+        내용 : <textarea class="from-control" th:text="${view.content}"></textarea>
+    </div>
+    <button id="deleteBtn">삭제</button>
+    <button id="updateBtn">수정</button>
+    <form th:action="@{/}" method="post" id="form"></form>
+</div>
+<script th:inline="javascript">
+    $(document).on('ready',function(e){
+        var form=$("#form")
+        var boardId=[[${view.boardId}]];
+        $(document).on('click','#deleteBtn',function(e){
+            $('#form').attr("action","delete");
+            form.append("<input type='hidden' name='boardId' value='"+boardId+"'>");
+            form.append("<input type='hidden' name='_method' value='delete'>");
+            form.submit();
+        })
+        $(document).on('click','#updateBtn',function(e){
+            var str="<input class='form-control' placeholder='제목입력' id='updateTitle'>";
+            $("#title").html(str);
+            str="<textarea class='form-control' placeholder='내용입력' id='updateContent'></textarea>";
+            $("#content").html(str);
+            $("#updateBtn").attr("id","updateConfirmBtn");
+        })
+        $(document).on('click','#updateConfirmBtn',function(e){
+            $('#form').attr("action","update");
+            var updateTitle=$('#updateTitle').val();
+            var updateContent=$('#updateContent').val();
+            form.append("<input type='hidden' name='boardId' value='"+boardId+"'>");
+            form.append("<input type='hidden' name='_method' value='put'>");
+            form.append("<input type='hidden' name='title' value='"+updateTitle+"'>");
+            form.append("<input type='hidden' name='content' value='"+updateContent+"'>");
+            form.submit();
+        })
+    })
+</script>
+
+</body>
+</html>

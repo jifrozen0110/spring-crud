@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns xmlns:th="http://www.w3.org/1999/xhtml" : th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/JavaScript" src="http://code.jquery.com/jquery-1.7.min.js"></script>
+</head>
+<body>
+
+    <input type='hidden' name='_method' value='put'>
+<div class="container">
+        <p><input type="hidden" name="bno" th:value="${view.boardId}"/></p>
+    <div>제목 : <input type="text" name="title" id="updateTitle" th:value="${view.title}"/></div>
+    <p><input type="text" name="name" th:value="${view.name}"/></p>
+        내용 : <textarea type="text" name="content" id="updateContent" th:text="${view.content}"></textarea>
+
+</div>
+    <button type="submit" value="수정하기" id="updateBtn" />
+    <form th:action="@{update}" method="post" id="form"></form>
+</body>
+</html>
